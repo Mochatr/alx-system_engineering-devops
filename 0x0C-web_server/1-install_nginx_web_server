@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#Update package lists
+sudo apt-get update -y
+
+#Install Nginx
+sudo apt-get install nginx -y
+
+#Create a custom HTML file
+echo "Hello World!" > /var/www/html/custom.html
+
+#Create a new Nginx site configuration
+cat <<EOF > /etc/nginx/sites-available/custom
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+	root /var/www/html;
+	index custom.html;
+    }
+}
+EOF
+
+#Enable the new site
+ln -s /etc/nginx/sites-availables/custom /etc/nginx/sites-enabled/
+
+#Restart Nginx
+nginx -s reload
