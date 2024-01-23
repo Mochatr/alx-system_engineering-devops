@@ -25,4 +25,4 @@ EOF
 ln -s /etc/nginx/sites-available/custom /etc/nginx/sites-enabled/
 
 #Restart Nginx
-nginx -s reload
+service nginx restart
