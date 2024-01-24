@@ -5,23 +5,21 @@ sudo apt-get -y update
 #Install Nginx
 sudo apt-get -y install nginx
 
-#Create an HTML File
-echo "Hello World!" > /var/www/html/index.html
+#Start Nginx
+sudo service nginx start
 
-#Create a new Nginx configuration file
-echo "server {
-    listen 80;
-    listen [::]:80;
+#Allow Nginx on firewall
+sudo ufw allow "Nginx HTTP"
 
-    root /var/www/html;
-    index index.html;
+#Set permissions
+sudo chown -R "$USER":$"USER" /var/www/html
+sudo chmod -R 755 /var/www
 
-    server_name _;
+#Set backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-    location / {
-    	try_files \$uri \$uri/ =404;
-    }
-}" | sudo tee /etc/nginx/sites-available/default
+#Create a new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
 #Restart Nginx
 sudo service nginx restart
