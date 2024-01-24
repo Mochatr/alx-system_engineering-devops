@@ -5,15 +5,6 @@ sudo apt-get -y update
 #Install Nginx
 sudo apt-get -y install nginx
 
-#Allow HTTP traffic through the firewall
-sudo ufw allow 'Nginx HTTP'
-
-#Create a custom HTML file
-echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
-
+sudo sh -c "echo 'Hello World!' > /var/www/html/index.nginx-debian.html"
 #Start Nginx
-if command -v service > /dev/null 2>&1; then
-	sudo service nginx start
-else
-	echo "service command not found, manual start required"
-fi
+sudo service nginx start
