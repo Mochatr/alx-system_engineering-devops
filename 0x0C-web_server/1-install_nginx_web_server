@@ -1,28 +1,19 @@
 #!/usr/bin/env bash
 #Update package lists
-apt-get update -y
+sudo apt-get -y update
 
 #Install Nginx
-apt-get install nginx -y
+sudo apt-get -y install nginx
+
+#Allow HTTP traffic through the firewall
+sudo ufw allow 'Nginx HTTP'
 
 #Create a custom HTML file
-echo "Hello World!" > /var/www/html/custom.html
+echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
 
-#Create a new Nginx site configuration
-cat <<EOF > /etc/nginx/sites-available/custom
-server {
-    listen 80;
-    server_name _;
-
-    location / {
-	root /var/www/html;
-	index custom.html;
-    }
-}
-EOF
-
-#Enable the new site
-ln -s /etc/nginx/sites-available/custom /etc/nginx/sites-enabled/
-
-#Restart Nginx
-service nginx restart
+#Start Nginx
+if command -v service > /dev/null 2>&1; then
+	sudo service nginx start
+else
+	echo "service command not found, manual start required"
+fi
