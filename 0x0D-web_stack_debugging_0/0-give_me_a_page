@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-#Run appache
-
+#Run apache on holberton school docker container
 sudo service apache2 start
