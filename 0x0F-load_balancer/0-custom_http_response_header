@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configure Nginx server
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+HOSTNAME=$(hostname)
+
+sudo sed -i "/listen \[::\]:80 default_server;/a \\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default
+
+sudo systemctl restart nginx
