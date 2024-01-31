@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#This script installs and configures HAProxy to balance the load between web-01 and web-02
+#This script installs as well as configures HAProxy to balance the load between web-01 and web-02
 
 #Update the package
 sudo apt-get update
