@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
 #Display subdomains for a domain
 
-get_record_info() {
-    domain=$1
-    subdomain=$2
-    result=$(dig +short $subdomain.$domain)
-    if [[ ! -z "$result" ]]; then
-	echo "The subdomain $subdomain is a record and points to $result"
-    fi
+function dig_record_info() {
+    subdomain=$1
+    domain=$2
+
+    dig "$subdomain.$domain" | awk -F' ' '/^;; ANSWER SECTION:/ {print $1"\n"$2"\n"$3"\n"$4}'
 }
 
-domain=$1
-subdomain=$2
-
-if [[ -z "$subdomain" ]]; then
-    for s in www lb-01 web-01 web-02; do
-	get_record_info $domain $s
-    done
+if [ $# -eq 1 ]; then
+	dig_record_info www "$1"
+	dig_record_info lb-01 "$1"
+	dig_record_info web-01 "$1"
+	dig_record_info web-02 "$1"
+elif [ $# -eq 2 ]; then
+    	dig_record_info "$2" "$1"
 else
-    get_record_info $domain $subdomain
+	echo "Usage: $(basename "$0") <domain> [subdomain]" >&2
+	exit 1
 fi
