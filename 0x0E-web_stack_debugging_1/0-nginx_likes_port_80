@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#This script configures Nginx not listening to port 80
-
+#This script configures a server to a particular requirements
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 service nginx restart
