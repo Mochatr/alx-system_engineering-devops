@@ -5,9 +5,9 @@ returns information about his/her TODO list progress
 and exports the task data to a JSON file.
 """
 
+import json
 import requests
 import sys
-import json
 
 
 if __name__ == "__main__":
