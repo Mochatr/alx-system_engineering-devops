@@ -5,8 +5,8 @@ fetches and exports tasks data for all
 employees to a JSON file named todo_all_employees.json
 """
 
-import requests
 import json
+import requests
 
 
 def fetch_and_export_all_tasks():
