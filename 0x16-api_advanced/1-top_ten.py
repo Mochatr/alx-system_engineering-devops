@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+"""Implement the function"""
 
 import requests
+import sys
 
 
 def top_ten(subreddit):
