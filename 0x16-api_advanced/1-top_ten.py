@@ -11,7 +11,7 @@ def top_ten(subreddit):
     for a given subreddit
     """
 
-    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
     headers = {'User-Agent': 'custom user-agent'}
     response = requests.get(url, headers=headers, allow_redirects=False)
 
