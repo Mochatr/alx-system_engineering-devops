@@ -27,3 +27,9 @@ def number_of_subscribers(subreddit):
         return 0
 
     return response.json().get('data', {}).get('subscribers', 0)
+
+
+if __name__ == "__main__":
+    subreddit = "python"
+    subscribers = number_of_subscribers(subreddit)
+    print(f"The subreddit '{subreddit}' has {subscribers} subscribers.")
