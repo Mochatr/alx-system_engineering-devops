@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+Implement the function
+"""
 import requests
 
 
@@ -20,16 +22,8 @@ def number_of_subscribers(subreddit):
     headers = {'User-Agent': 'Chrome/91.0.4472.124'}
     response = requests.get(url, headers=headers, allow_redirects=False)
 
-    if response.status_code == 404:
+    if response.status_code = 200:
+        data = response.json()
+        return data.get('data').get('subscribers')
+    else:
         return 0
-    elif response.status_code != 200:
-        print(f"Error: Received status code {response.status_code}")
-        return 0
-
-    return response.json().get('data', {}).get('subscribers', 0)
-
-
-if __name__ == "__main__":
-    subreddit = "python"
-    subscribers = number_of_subscribers(subreddit)
-    print(f"The subreddit '{subreddit}' has {subscribers} subscribers.")
