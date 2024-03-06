@@ -32,7 +32,7 @@ def count_words(subreddit, word_list, after=None, counter=None):
         url += f"?after={after}"
     headers = {'User-Agent': 'Chrome/91.0.4472.124'}
     response = requests.get(url, headers=headers,
-               allow_redirects=False)
+                            allow_redirects=False)
 
     if response.status_code == 404:
         return
@@ -46,8 +46,8 @@ def count_words(subreddit, word_list, after=None, counter=None):
             title = post['data']['title'].lower()
             for word in word_list:
                 # Count occurrences of the word in the title
-                count = sum(1 for _ in 
-                            re.finditer(r'\b' + re.escape(word) + r'\b', title))
+                count = sum(1 for _ in re.finditer(r'\b' +
+                            re.escape(word) + r'\b', title))
                 counter[word] += count
 
         # Check if there are more pages to fetch
@@ -55,7 +55,8 @@ def count_words(subreddit, word_list, after=None, counter=None):
             count_words(subreddit, word_list, data['data']['after'], counter)
         else:
             # Print results in descending order by count, then alphabetically
-            for word, count in sorted(counter.items(), key=lambda item: (-item[1], item[0])):
+            for word, count in sorted(counter.items(),
+                                      key=lambda item: (-item[1], item[0])):
                 if count > 0:
                     print(f"{word}: {count}")
 
@@ -63,7 +64,7 @@ def count_words(subreddit, word_list, after=None, counter=None):
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <subreddit> <list of keywords>"
+        print(f"Usage: {sys.argv[0]} <subreddit> <list of keywords>")
         print(f"Ex: {sys.argv[0]} programming 'python java javascript'")
     else:
         count_words(sys.argv[1], [x for x in sys.argv[2].split()])
