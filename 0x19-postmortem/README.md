@@ -1,6 +1,8 @@
 ## Postmortem: Unexpected Outage Due to Database Overload
+
 <img src="https://as2.ftcdn.net/v2/jpg/05/10/47/67/1000_F_510476769_AaPKz45O1pwPb7aEuBbKn2OkHxsJG48t.jpg">
-# Issue Summary:
+
+# Issue Summary
 On March 5, 2024, from 10:00 AM to 12:45 PM EST, our main web service experienced a significant outage, impacting approximately 65% of our user base. Users reported inability to access their dashboards, experiencing timeouts and slow responses. The root cause was identified as an overloaded database server due to an inefficient query that locked critical tables.
 
 # Timeline
