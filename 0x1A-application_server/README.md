@@ -12,8 +12,6 @@ For this project, we expect you to look at these concepts:
 - Server
 - Web stack debugging
 
-![Application server](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/9/c7d1ed0a2e10d1b4e9b3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240311%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240311T165305Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=5f9ddf868f96bd3980f998df06f42a10852ab704eeeca87b76182c357d76d18d)
-
 ## Background Context
 
 Our web infrastructure already uses Nginx to serve web pages. The project aims to incorporate an application server to manage dynamic content effectively, demonstrating a comprehensive web stack configuration.
