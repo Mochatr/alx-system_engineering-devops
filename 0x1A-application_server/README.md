@@ -12,7 +12,7 @@ For this project, we expect you to look at these concepts:
 - Server
 - Web stack debugging
 
-<img src="https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/9/c7d1ed0a2e10d1b4e9b3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240311%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240311T165305Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=5f9ddf868f96bd3980f998df06f42a10852ab704eeeca87b76182c357d76d18d">
+![Application server](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2018/9/c7d1ed0a2e10d1b4e9b3.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20240311%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240311T165305Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=5f9ddf868f96bd3980f998df06f42a10852ab704eeeca87b76182c357d76d18d)
 
 ## Background Context
 
@@ -20,11 +20,11 @@ Our web infrastructure already uses Nginx to serve web pages. The project aims t
 
 ## Resources
 
-<link rel="Application server vs web server" href="https://www.nginx.com/resources/glossary/application-server-vs-web-server/"> 
-<link rel="How to Serve a Flask Application with Gunicorn and Nginx on Ubuntu 16.04" href="https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04"> 
-<link rel="Running Gunicorn" href="https://docs.gunicorn.org/en/latest/run.html">
-<link rel="Be careful with the way Flask manages slash in route" href="https://werkzeug.palletsprojects.com/en/3.0.x/">
-<link rel="Upstart documentation" href="https://doc.ubuntu-fr.org/upstart">
+[Application server vs web server](https://www.nginx.com/resources/glossary/application-server-vs-web-server/)
+[How to Serve a Flask Application with Gunicorn and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04) 
+[Running Gunicorn](https://docs.gunicorn.org/en/latest/run.html)
+[Be careful with the way Flask manages slash in route](https://werkzeug.palletsprojects.com/en/3.0.x/)
+[Upstart documentation](https://doc.ubuntu-fr.org/upstart)
 
 # Requirements
 
@@ -41,7 +41,7 @@ Our web infrastructure already uses Nginx to serve web pages. The project aims t
 - Files must be executable and pass Shellcheck (version 0.3.7-5~ubuntu16.04.1) without errors.
 - Include a shebang line #!/usr/bin/env bash and a comment line explaining the script's purpose.
 
-## Setup Instructions
+## Setup instructions
 
 - Install Gunicorn: Install Gunicorn globally on your server. Do not use virtualenv.
 - Configure Nginx: Update your Nginx configuration to proxy requests to Gunicorn serving the Flask application.
