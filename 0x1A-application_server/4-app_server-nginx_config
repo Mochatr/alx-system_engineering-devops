@@ -1,9 +1,0 @@
-server {
-    listen 80;
-    server_name 54.146.83.181;
-
-    location /api/ {
-        proxy_pass http://localhost:5002;
-        include proxy_params;
-    }
-}
