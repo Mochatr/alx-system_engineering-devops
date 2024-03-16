@@ -1,70 +1,63 @@
 #!/usr/bin/python3
-"""
-Implement the function
-"""
+"""Implement the function"""
 
-from collections import Counter
+
 import requests
-import re
 
 
-def count_words(subreddit, word_list, after=None, counter=None):
+def count_words(subreddit, word_list, after=None, count_dict=None):
     """
     Recursively queries the Reddit API to get the titles of all
     hot posts for a given subreddit, counts occurrences of given keywords
     in titles, and prints the sorted count.
-
-    Args:
-        subreddit (str): The name of the subreddit.
-        word_list (list): A list of keywords to count
-        after (str): The ID of the last post from the previous request.
-        counter (Counter): A counter object to keep track
-        of keyword occurencec.
-
-    Returns:
-        None
     """
-    if counter is None:
-        counter = Counter()
 
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    if after:
-        url += f"?after={after}"
-    headers = {'User-Agent': 'Chrome/91.0.4472.124'}
-    response = requests.get(url, headers=headers,
+    if not count_dict:
+        count_dict = {key.lower(): 0 for key in word_list}
+
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    parameters = {'limit': 10, 'after': after}
+    headers = {'User-Agent': 'custom user-agent'}
+
+    response = requests.get(url,
+                            parameters=parameters,
+                            headers=headers,
                             allow_redirects=False)
 
-    if response.status_code == 404:
-        return
-    elif response.status_code != 200:
-        print("Error: Received status code", response.status_code)
-        return
+    try:
+        results = response.json()
+        if response.status_code == 404:
+            raise Exception
+        except Exception:
+            return
 
-    data = response.json()
-    if 'data' in data and 'children' in data['data']:
-        for post in data['data']['children']:
-            title = post['data']['title'].lower()
-            for word in word_list:
-                # Count occurrences of the word in the title
-                count = sum(1 for _ in re.finditer(r'\b' +
-                            re.escape(word) + r'\b', title))
-                counter[word] += count
+        data = response.json().get('data', {})
+        for post in data.get('children', []):
+            title = post.get('data', {}).get('title', '').lower().split()
 
-        # Check if there are more pages to fetch
-        if 'after' in data['data']:
-            count_words(subreddit, word_list, data['data']['after'], counter)
-        else:
-            # Print results in descending order by count, then alphabetically
-            for word, count in sorted(counter.items(),
-                                      key=lambda item: (-item[1], item[0])):
-                if count > 0:
-                    print(f"{word}: {count}")
+            for key in count_dict.keys():
+                if key in title:
+                    times = len([t for t in title if t == key.lower()])
+                    count_dict[key] += times
 
+            if data.get('after'):
+                return count_words(subreddit,
+                                   word_list,
+                                   data.get('after'),
+                                   count_dict)
 
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <subreddit> <list of keywords>")
-        print(f"Ex: {sys.argv[0]} programming 'python java javascript'")
-    else:
-        count_words(sys.argv[1], [x for x in sys.argv[2].split()])
+            else:
+                if len(word_list) > len(count_dict.keys()):
+                    temp_dict = count_dict.copy()
+                    for word in word_list:
+                        word_in_lowercase = word.lower()
+                        if word not in count_dict and word_in_lowercase in count_dict:
+                            count_dict[word_in_lowercase] += temp_dict[word_in_lowercase]
+
+                count_dict = dict(sorted(count_dict.items(),
+                                         key=lamnda item: (item[1],
+                                                           item[0].lower()),
+                                         reverse=True))
+
+                [print('{}: {}'.format(key, value))
+                        for key, value in count_dict.items() if value > 0]

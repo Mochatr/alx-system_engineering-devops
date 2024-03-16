@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-Implement the function
-"""
+""" Implement the function """
+
 import requests
 
 
@@ -19,31 +18,23 @@ def recurse(subreddit, hot_list=[], after=None):
         list: A list of titles of all hot posts for the subreddit.
         Returns None if the subreddit is invalid.
     """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    if after:
-        url += f"?after={after}"
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    parameters = {'limit': 100, 'after':after}
     headers = {'User-Agent': 'custom user-agent'}
-    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    if response.status_code == 200:
-        data = response.json()
-        if 'data' in data and 'children' in data['data']:
-            for post in data['data']['children']:
-                hot_list.append(post['data']['title'])
-            # Check if there are more pages to fetch
-            if 'after' in data['data']:
-                return recurse(subreddit, hot_list, data['data']['after'])
-            else:
-                return hot_list
-    return None
+    response = requests.get(url,
+                            parameters=parameters,
+                            headers=headers,
+                            allow_redirects=False)
 
+    if response.status_code == 404:
+        return None
 
-if __name__ == "__main__":
-    # Example of a subreddit
-    subreddit = "Technology"
-    hot_posts = recurse(subreddit)
-    if hot_posts:
-        for title in hot_posts:
-            print(title)
+    data = response.json().get('data').get('data', {})
+    for post in data.get('children', []):
+        hot_list.append(post.get('data').get('title'))
+
+    if data.get('after'):
+        return recurse(subreddit, hot_list, data.get('after'))
     else:
-        print("Failed to fetch posts or subreddit is invalid.")
+        return hot_list

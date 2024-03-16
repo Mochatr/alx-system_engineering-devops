@@ -2,7 +2,6 @@
 """Implement the function"""
 
 import requests
-import sys
 
 
 def top_ten(subreddit):
@@ -10,14 +9,17 @@ def top_ten(subreddit):
     Queries the Reddit API to get the titles of the first 10 hot posts
     for a given subreddit
     """
-
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
+    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    parameters = {'limit': 10}
     headers = {'User-Agent': 'custom user-agent'}
-    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    if response.status_code == 200:
-        children = response.json().get('data').get('children')
-        for i in range(10):
-            print(children[i].get('data').get('title'))
-    else:
+    response = requests.get(url,
+                            params=params,
+                            headers=headers,
+                            allow_redirects=False)
+    if response.status_code == 404:
         print('None')
+        return
+
+    for post in response.json().get('data', {}).get('children', []):
+            print(post.get('data', {}).get('title', ''))

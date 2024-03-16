@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-Implement the function
-"""
+""" Implement the function """
+
 import requests
 
 
@@ -18,12 +17,11 @@ def number_of_subscribers(subreddit):
         Return 0 if the subreddit is invalid.
     """
 
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {'User-Agent': 'Chrome/91.0.4472.124'}
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {'User-Agent': 'custom user-agent'}
 
-    if response.status_code == 200:
-        data = response.json()
-        return data.get('data').get('subscribers')
-    else:
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 404:
         return 0
+
+    return response.json().get('data', {}).get('subscribers', 0)
