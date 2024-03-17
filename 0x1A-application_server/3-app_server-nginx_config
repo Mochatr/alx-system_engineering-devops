@@ -4,7 +4,7 @@ server {
     server_name 54.146.83.181;
     add_header X-Served-By 373950-web-01;
     include /etc/nginx/proxy_params;
-    # Serves /airbnb-onepage/ route on AirBnB_clone_v3
+    #  Serves /airbnb-onepage/ route on AirBnB_clone_v3
     location = /airbnb-onepage/ {
         proxy_pass http://127.0.0.1:5000;
     }
