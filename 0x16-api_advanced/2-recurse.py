@@ -18,19 +18,19 @@ def recurse(subreddit, hot_list=[], after=None):
         list: A list of titles of all hot posts for the subreddit.
         Returns None if the subreddit is invalid.
     """
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    parameters = {'limit': 100, 'after':after}
+    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
+    params = {'limit': 100, 'after': after}
     headers = {'User-Agent': 'custom user-agent'}
 
     response = requests.get(url,
-                            parameters=parameters,
+                            params=params,
                             headers=headers,
                             allow_redirects=False)
 
     if response.status_code == 404:
         return None
 
-    data = response.json().get('data').get('data', {})
+    data = response.json().get('data', {})
     for post in data.get('children', []):
         hot_list.append(post.get('data').get('title'))
 

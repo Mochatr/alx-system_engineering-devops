@@ -10,7 +10,7 @@ def top_ten(subreddit):
     for a given subreddit
     """
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
-    parameters = {'limit': 10}
+    params = {'limit': 10}
     headers = {'User-Agent': 'custom user-agent'}
 
     response = requests.get(url,
@@ -22,4 +22,4 @@ def top_ten(subreddit):
         return
 
     for post in response.json().get('data', {}).get('children', []):
-            print(post.get('data', {}).get('title', ''))
+        print(post.get('data', {}).get('title', ''))

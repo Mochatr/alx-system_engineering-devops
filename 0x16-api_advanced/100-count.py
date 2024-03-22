@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Implement the function"""
 
-
 import requests
 
 
@@ -16,11 +15,11 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
         count_dict = {key.lower(): 0 for key in word_list}
 
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    parameters = {'limit': 10, 'after': after}
+    params = {'limit': 10, 'after': after}
     headers = {'User-Agent': 'custom user-agent'}
 
     response = requests.get(url,
-                            parameters=parameters,
+                            params=params,
                             headers=headers,
                             allow_redirects=False)
 
@@ -41,10 +40,7 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
                     count_dict[key] += times
 
             if data.get('after'):
-                return count_words(subreddit,
-                                   word_list,
-                                   data.get('after'),
-                                   count_dict)
+                return count_words(subreddit, word_list, data.get('after'), count_dict)
 
             else:
                 if len(word_list) > len(count_dict.keys()):
@@ -60,4 +56,4 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
                                          reverse=True))
 
                 [print('{}: {}'.format(key, value))
-                        for key, value in count_dict.items() if value > 0]
+                 for key, value in count_dict.items() if value > 0]
